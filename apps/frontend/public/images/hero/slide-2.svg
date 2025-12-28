@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="techGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0b3d91"/>
+      <stop offset="100%" style="stop-color:#1e88e5"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1920" height="1080" fill="url(#techGradient)"/>
+  
+  <!-- Grid pattern -->
+  <g stroke="#64b5f6" stroke-width="1" opacity="0.2">
+    <line x1="0" y1="0" x2="1920" y2="0"/>
+    <line x1="0" y1="100" x2="1920" y2="100"/>
+    <line x1="0" y1="200" x2="1920" y2="200"/>
+    <line x1="0" y1="300" x2="1920" y2="300"/>
+    <line x1="0" y1="400" x2="1920" y2="400"/>
+    <line x1="0" y1="500" x2="1920" y2="500"/>
+    <line x1="0" y1="600" x2="1920" y2="600"/>
+    <line x1="0" y1="700" x2="1920" y2="700"/>
+    <line x1="0" y1="800" x2="1920" y2="800"/>
+    <line x1="0" y1="900" x2="1920" y2="900"/>
+    <line x1="0" y1="1000" x2="1920" y2="1000"/>
+  </g>
+  
+  <!-- Telemetry visualization -->
+  <g transform="translate(960, 400)">
+    <!-- Central display -->
+    <rect x="-200" y="-150" width="400" height="300" rx="20" fill="#1a237e" stroke="#f4c430" stroke-width="3"/>
+    
+    <!-- Data waves -->
+    <path d="M-180 0 Q-120 -50, -60 0 T 60 0 T 180 0" fill="none" stroke="#64b5f6" stroke-width="3"/>
+    <path d="M-180 40 Q-120 -10, -60 40 T 60 40 T 180 40" fill="none" stroke="#f4c430" stroke-width="2"/>
+    <path d="M-180 80 Q-120 30, -60 80 T 60 80 T 180 80" fill="none" stroke="#fff" stroke-width="2" opacity="0.6"/>
+    
+    <!-- Data points -->
+    <circle cx="-100" cy="-80" r="8" fill="#f4c430"/>
+    <circle cx="0" cy="-80" r="8" fill="#64b5f6"/>
+    <circle cx="100" cy="-80" r="8" fill="#fff"/>
+    
+    <text x="0" y="-100" text-anchor="middle" font-family="monospace" font-size="24" fill="#f4c430">TELEMETRY ACTIVE</text>
+  </g>
+  
+  <!-- Satellite icons -->
+  <g transform="translate(300, 300)" opacity="0.6">
+    <circle cx="0" cy="0" r="40" fill="none" stroke="#f4c430" stroke-width="2"/>
+    <circle cx="0" cy="0" r="60" fill="none" stroke="#f4c430" stroke-width="1"/>
+    <circle cx="0" cy="0" r="80" fill="none" stroke="#f4c430" stroke-width="0.5"/>
+  </g>
+  
+  <g transform="translate(1600, 500)" opacity="0.6">
+    <circle cx="0" cy="0" r="50" fill="none" stroke="#64b5f6" stroke-width="2"/>
+    <circle cx="0" cy="0" r="70" fill="none" stroke="#64b5f6" stroke-width="1"/>
+    <circle cx="0" cy="0" r="90" fill="none" stroke="#64b5f6" stroke-width="0.5"/>
+  </g>
+</svg>
