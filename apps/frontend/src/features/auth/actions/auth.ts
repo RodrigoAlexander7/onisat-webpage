@@ -68,10 +68,8 @@ export async function loginWithCredentials(
     // Set httpOnly cookie
     await setAuthCookie(accessToken);
 
-    return {
-      success: true,
-      message: 'Login successful',
-    };
+    // Redirect to dashboard on successful login
+    redirect('/dashboard');
   } catch (error) {
     console.error('Login error:', error);
     return {
@@ -110,10 +108,8 @@ export async function registerWithCredentials(
     // Set httpOnly cookie
     await setAuthCookie(accessToken);
 
-    return {
-      success: true,
-      message: 'Registration successful',
-    };
+    // Redirect to dashboard on successful registration
+    redirect('/dashboard');
   } catch (error) {
     console.error('Registration error:', error);
     return {
@@ -125,6 +121,5 @@ export async function registerWithCredentials(
 
 export async function logout() {
   await clearAuthCookie();
-  cookieStore.delete('access_token');
   redirect('/');
 }

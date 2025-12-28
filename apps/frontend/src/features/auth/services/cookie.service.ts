@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers';
+import { serverEnv } from '@/config/env';
 
 /**
  * Sets the authentication cookie with secure defaults
@@ -10,7 +11,7 @@ export async function setAuthCookie(token: string): Promise<void> {
     name: 'access_token',
     value: token,
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: serverEnv.isProduction,
     sameSite: 'lax',
     maxAge: 60 * 60 * 24 * 7, // 1 week
     path: '/',

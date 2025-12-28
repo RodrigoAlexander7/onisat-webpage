@@ -1,8 +1,8 @@
 import axios from 'axios';
-
+import { serverEnv } from '@/config/env';
 
 export const apiClient = axios.create({ 
-    baseURL: process.env.BACKEND_URL || 'http://localhost:3000', 
+    baseURL: serverEnv.backendUrl, 
     withCredentials: true,
     timeout: 5000,
 });

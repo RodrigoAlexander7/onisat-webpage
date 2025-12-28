@@ -1,11 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { loginWithCredentials } from '@/features/auth/actions/auth';
 
 export default function LoginForm() {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
@@ -19,15 +17,10 @@ export default function LoginForm() {
     setError('');
 
     try {
-      const result = await loginWithCredentials(formData);
-
-      if (result.success) {
-        router.push('/dashboard');
-      } else {
-        setError(result.error || 'Login failed');
-      }
-    } catch (err) {
-      setError('An unexpected error occurred');
+      await loginWithCredentials(formData);
+      // Si llega aquí, hubo un error (el éxito redirige automáticamente)
+    } catch (err: any) {
+      setError(err.message || 'An unexpected error occurred');
     } finally {
       setIsLoading(false);
     }

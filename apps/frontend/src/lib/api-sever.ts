@@ -1,6 +1,5 @@
 import { cookies } from 'next/headers';
-
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:3000';
+import { serverEnv } from '@/config/env';
 
 interface FetchOptions extends RequestInit {
   token?: string; // Token personalizado (opcional)
@@ -15,7 +14,7 @@ export async function fetchAPI<T = any>(
   // Si se proporciona token, úsalo; si no, intenta leer de cookies
   const authToken = token || (await cookies()).get('access_token')?.value;
 
-  const res = await fetch(`${BACKEND_URL}${endpoint}`, {
+  const res = await fetch(`${serverEnv.backendUrl}${endpoint}`, {
     ...fetchOptions,
     headers: {
       'Content-Type': 'application/json',

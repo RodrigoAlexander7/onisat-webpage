@@ -1,11 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { registerWithCredentials } from '@/features/auth/actions/auth';
 
 export default function RegisterForm() {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
@@ -35,19 +33,14 @@ export default function RegisterForm() {
     }
 
     try {
-      const result = await registerWithCredentials({
+      await registerWithCredentials({
         name: formData.name,
         email: formData.email,
         password: formData.password,
       });
-
-      if (result.success) {
-        router.push('/dashboard');
-      } else {
-        setError(result.error || 'Registration failed');
-      }
-    } catch (err) {
-      setError('An unexpected error occurred');
+      // Si llega aquí, hubo un error (el éxito redirige automáticamente)
+    } catch (err: any) {
+      setError(err.message || 'An unexpected error occurred');
     } finally {
       setIsLoading(false);
     }
