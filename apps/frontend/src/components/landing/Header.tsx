@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import Link from 'next/link';
 
 interface NavItem {
@@ -10,15 +10,38 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: 'Sobre el evento', href: '/evento', hasSubmenu: true },
-  { label: 'Misión y Visión', href: '/mision', hasSubmenu: true },
-  { label: 'Noticias y eventos', href: '/noticias', hasSubmenu: true },
-  { label: 'Sobre nosotros', href: '/nosotros', hasSubmenu: true },
-  { label: 'Sponsors', href: '/sponsors', hasSubmenu: false },
+  { label: 'Sobre el evento', href: '#evento', hasSubmenu: false },
+  { label: 'Misión y Visión', href: '#mision', hasSubmenu: false },
+  { label: 'Noticias y eventos', href: '#noticias', hasSubmenu: false },
+  { label: 'Sobre nosotros', href: '#nosotros', hasSubmenu: false },
+  { label: 'Sponsors', href: '#sponsors', hasSubmenu: false },
 ];
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleNavClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      if (href.startsWith('#')) {
+        e.preventDefault();
+        const targetId = href.substring(1);
+        const element = document.getElementById(targetId);
+        if (element) {
+          const headerOffset = 80;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition =
+            elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth',
+          });
+        }
+        setIsMenuOpen(false);
+      }
+    },
+    []
+  );
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
@@ -36,28 +59,14 @@ export default function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden items-center gap-1 lg:flex">
           {navItems.map((item) => (
-            <Link
+            <a
               key={item.href}
               href={item.href}
-              className="group flex items-center gap-1 rounded-lg px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-onisat-blue"
+              onClick={(e) => handleNavClick(e, item.href)}
+              className="group flex cursor-pointer items-center gap-1 rounded-lg px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-onisat-blue"
             >
               {item.label}
-              {item.hasSubmenu && (
-                <svg
-                  className="h-4 w-4 text-gray-400 transition-transform group-hover:rotate-180 group-hover:text-onisat-blue"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              )}
-            </Link>
+            </a>
           ))}
         </nav>
 
@@ -127,29 +136,14 @@ export default function Header() {
         <nav className="border-t border-gray-100 bg-white px-4 py-4 lg:hidden">
           <div className="flex flex-col gap-1">
             {navItems.map((item) => (
-              <Link
+              <a
                 key={item.href}
                 href={item.href}
-                className="flex items-center justify-between rounded-lg px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-onisat-blue"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={(e) => handleNavClick(e, item.href)}
+                className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-onisat-blue"
               >
                 {item.label}
-                {item.hasSubmenu && (
-                  <svg
-                    className="h-4 w-4 text-gray-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                )}
-              </Link>
+              </a>
             ))}
           </div>
         </nav>

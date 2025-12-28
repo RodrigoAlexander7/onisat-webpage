@@ -37,7 +37,7 @@ const mockNews: NewsCardProps[] = [
 
 export default function NewsSection() {
   return (
-    <section className="bg-gray-50 py-20 sm:py-24">
+    <section id="noticias" className="bg-gray-50 py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mb-12 sm:mb-16">
