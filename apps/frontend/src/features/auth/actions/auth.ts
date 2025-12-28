@@ -1,34 +1,26 @@
 'use server';
 
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { api } from '@/lib/apis';
-
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:3000';
-
-async function getAuthToken() {
-  const cookieStore = await cookies();
-  return cookieStore.get('access_token')?.value;
-}
+import { fetchAPI } from '@/lib/api-sever';
+import { validateToken } from '@/features/auth/services/token.service';
+import { setAuthCookie, clearAuthCookie, getAuthToken } from '@/features/auth/services/cookie.service';
 
 /**
- * Method to get the current user from the backend using the stored auth token.
- * Normalmente, el backend Nest expone un endpoint protegido (GET /users/me) que 
- * devuelve los datos del usuario basándose en el token JWT
- * 
+ * Get the current user from the backend using the stored auth token.
+ */
 export async function getCurrentUser() {
-   const token = await getAuthToken();
-   if (!token) {
-      return null;
-   }
-   try {
-      
-   } catch (error) {
-
-   }
+  const token = await getAuthToken();
+  if (!token) {
+    return null;
+  }
+  try {
+    const user = await fetchAPI('/users/me');
+    return user;
+  } catch (error) {
+    console.error('Failed to get current user:', error);
+    return null;
+  }
 }
-
-*/
 
 interface LoginCredentials {
   email: string;
@@ -56,22 +48,17 @@ export async function loginWithCredentials(
 ): Promise<AuthResponse> {
   try {
     // Call backend login endpoint
-    const response = await api.post(`/auth/login`,credentials, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const { accessToken } = response.data
+    const { accessToken } = await fetchAPI<{ accessToken: string }>(
+      '/auth/login',
+      {
+        method: 'POST',
+        body: JSON.stringify(credentials),
+      }
+    );
 
     // Validate token with backend
-    try {
-      await api.get('/users/me', {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-    } catch (error) {
-      console.error('Token validation failed:', error);
+    const isValid = await validateToken(accessToken);
+    if (!isValid) {
       return {
         success: false,
         error: 'Token validation failed',
@@ -79,16 +66,7 @@ export async function loginWithCredentials(
     }
 
     // Set httpOnly cookie
-    const cookiesStore = await cookies();
-    cookiesStore.set({
-      name: 'access_token',
-      value: accessToken,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 7, // 1 week
-      path: '/',
-    });
+    await setAuthCookie(accessToken);
 
     return {
       success: true,
@@ -112,25 +90,25 @@ export async function registerWithCredentials(
 ): Promise<AuthResponse> {
   try {
     // Call backend register endpoint
-    const response = await api.post(`/auth/register`, data, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const { accessToken } = await fetchAPI<{ accessToken: string }>(
+      '/auth/register',
+      {
+        method: 'POST',
+        body: JSON.stringify(data),
+      }
+    );
 
-    const { accessToken } = response.data;
+    // Validate token with backend
+    const isValid = await validateToken(accessToken);
+    if (!isValid) {
+      return {
+        success: false,
+        error: 'Token validation failed',
+      };
+    }
 
     // Set httpOnly cookie
-    const cookiesStore = await cookies();
-    cookiesStore.set({
-      name: 'access_token',
-      value: accessToken,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 7, // 1 week
-      path: '/',
-    });
+    await setAuthCookie(accessToken);
 
     return {
       success: true,
@@ -146,7 +124,7 @@ export async function registerWithCredentials(
 }
 
 export async function logout() {
-  const cookieStore = await cookies();
+  await clearAuthCookie();
   cookieStore.delete('access_token');
   redirect('/');
 }
