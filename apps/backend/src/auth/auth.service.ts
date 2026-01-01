@@ -3,12 +3,14 @@ import {
   UnauthorizedException,
   ConflictException,
   BadRequestException,
+  ForbiddenException,
 } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { UsersService } from "@/users/users.service";
 import type { User } from "@generated/prisma/client";
 import * as bcrypt from "bcrypt";
 import { RegisterDto, LoginDto } from "@/auth/dto";
+import { isEmailWhitelisted } from "@/configs/email-whitelist";
 
 interface GoogleProfile {
   name?: string;
@@ -51,9 +53,17 @@ export class AuthService {
   /**
    * Registers a new user with email and password
    * Throws ConflictException if email already exists
+   * Throws ForbiddenException if email is not whitelisted
    */
   async register(dto: RegisterDto): Promise<{ accessToken: string }> {
     const { email, password, name } = dto;
+
+    // Check if email is whitelisted
+    if (!isEmailWhitelisted(email)) {
+      throw new ForbiddenException(
+        "Email not authorized. Please contact an administrator.",
+      );
+    }
 
     // Check if user already exists
     const existingUser = await this.usersService.findByEmail(email);
@@ -93,6 +103,7 @@ export class AuthService {
   /**
    * Google OAuth callback handler
    * We don't use Google tokens; we create our own JWT
+   * Throws ForbiddenException if email is not whitelisted
    */
   async callbackOauthGoogle(
     profile: GoogleProfile,
@@ -100,6 +111,13 @@ export class AuthService {
     const { email, name, image } = profile;
     console.log("EMAIL RECIBIDO:", email);
     if (!email) throw new UnauthorizedException("Email not found from Google");
+
+    // Check if email is whitelisted
+    if (!isEmailWhitelisted(email)) {
+      throw new ForbiddenException(
+        "Email not authorized. Please contact an administrator.",
+      );
+    }
 
     let user: User | null = await this.usersService.findByEmail(email);
 

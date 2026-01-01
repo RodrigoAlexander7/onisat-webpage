@@ -3,6 +3,7 @@ import { AppController } from "@/app.controller";
 import { AppService } from "@/app.service";
 import { AuthModule } from "@/auth/auth.module";
 import { UsersModule } from "@/users/users.module";
+import { NewsModule } from "@/news/news.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
 import { PrismaModule } from "./prisma/prisma.module";
@@ -27,6 +28,7 @@ import configuration from "./configs/configuration";
     }),
     UsersModule,
     AuthModule,
+    NewsModule,
     PrismaModule,
   ],
   controllers: [AppController],
