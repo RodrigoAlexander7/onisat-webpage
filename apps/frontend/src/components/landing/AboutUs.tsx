@@ -12,54 +12,52 @@ interface TeamMember {
 const teamMembers: TeamMember[] = [
   {
     id: '1',
-    name: 'Ana García López',
-    role: 'Líder de Proyecto',
+    name: 'Edison Velasco Huaman',
+    role: 'Estudiante de Física',
     image: '/images/team/member-1.svg',
     linkedin: 'https://linkedin.com/in/',
-    github: 'https://github.com/',
   },
   {
     id: '2',
-    name: 'Carlos Martínez',
-    role: 'Ingeniero de Estructuras',
+    name: 'Wendy Analy Vilca Luna',
+    role: 'Estudiante de Física',
     image: '/images/team/member-2.svg',
     linkedin: 'https://linkedin.com/in/',
   },
   {
     id: '3',
-    name: 'María Fernanda Ruiz',
-    role: 'Especialista en Telemetría',
+    name: 'Diana Isabel Huanqui Chirme',
+    role: 'Estudiante de Ingeniería Eléctrica',
     image: '/images/team/member-3.svg',
     linkedin: 'https://linkedin.com/in/',
-    github: 'https://github.com/',
   },
   {
     id: '4',
-    name: 'Diego Hernández',
-    role: 'Diseñador de Software',
+    name: 'Luis Brandon Velasco Huaman',
+    role: 'Estudiante de Física',
     image: '/images/team/member-4.svg',
-    github: 'https://github.com/',
+    linkedin: 'https://linkedin.com/in/',
   },
   {
     id: '5',
-    name: 'Sofía Ramírez',
-    role: 'Ingeniera de Sistemas',
+    name: 'Alex Hugo Torres Guzman',
+    role: 'Estudiante de Ingeniería Electrónica',
     image: '/images/team/member-5.svg',
     linkedin: 'https://linkedin.com/in/',
   },
   {
     id: '6',
-    name: 'Luis Eduardo Torres',
-    role: 'Especialista en Fotografía 3D',
+    name: 'Brian Sebastián Sánchez Montoya',
+    role: 'Estudiante de Ingeniería Mecánica',
     image: '/images/team/member-6.svg',
     linkedin: 'https://linkedin.com/in/',
-    github: 'https://github.com/',
   },
   {
     id: '7',
-    name: 'Valentina Morales',
-    role: 'Comunicaciones y Diseño',
+    name: 'Rodrigo Alexander Fernandez Huarca',
+    role: 'Estudiante de Ingeniería de Sistemas',
     image: '/images/team/member-7.svg',
+    github: 'https://github.com/RodrigoAlexander7',
     linkedin: 'https://linkedin.com/in/',
   },
 ];
@@ -77,7 +75,7 @@ export default function AboutUs() {
             Sobre Nosotros
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
-            Somos un grupo de estudiantes apasionados de la UNAM, unidos por el
+            Somos un grupo de estudiantes apasionados de la UNSA, unidos por el
             sueño de conquistar el espacio
           </p>
         </div>
@@ -87,9 +85,8 @@ export default function AboutUs() {
           {teamMembers.map((member, index) => (
             <article
               key={member.id}
-              className={`group relative overflow-hidden rounded-2xl bg-white p-6 shadow-md transition-all hover:shadow-xl ${
-                index === 0 ? 'sm:col-span-2 md:col-span-1' : ''
-              }`}
+              className={`group relative overflow-hidden rounded-2xl bg-white p-6 shadow-md transition-all hover:shadow-xl ${index === 0 ? 'sm:col-span-2 md:col-span-1' : ''
+                }`}
             >
               {/* Avatar */}
               <div className="relative mx-auto mb-4 h-24 w-24 overflow-hidden rounded-full bg-gradient-to-br from-onisat-blue to-onisat-navy p-1">
