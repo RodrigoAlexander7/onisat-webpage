@@ -16,7 +16,7 @@ export default () => {
     auth: {
       // Tomamos el string, lo separamos por comas y limpiamos espacios
       emailWhitelist: process.env.EMAIL_WHITELIST
-        ? process.env.EMAIL_WHITELIST.split(',').map(email => email.trim().toLowerCase())
+        ? process.env.EMAIL_WHITELIST.split(':').map(email => email.trim().toLowerCase())
         : [],
     },
   };

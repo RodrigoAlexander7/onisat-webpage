@@ -32,7 +32,7 @@ async function bootstrap() {
     developerDocumentation(app);
   }
   app.use(cookieParser()); // so now all the routes need to have access to cookies
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 3000, "0.0.0.0");
 }
 bootstrap().catch((err) => {
   console.error("Error during bootstrap:", err);
