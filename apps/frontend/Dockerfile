@@ -44,6 +44,7 @@ WORKDIR /app
 RUN corepack enable
 
 # COPIAR LO NECESARIO:
+COPY --from=builder /app/next.config.* ./
 # 1. package.json (para saber qué scripts correr)
 COPY --from=builder /app/package.json ./
 # 2. node_modules (las librerías descargadas)

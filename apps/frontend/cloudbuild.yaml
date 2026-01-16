@@ -1,0 +1,14 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      # Pasamos las variables como argumentos de construcción (Build Args)
+      '--build-arg', 'NEXT_PUBLIC_API_URL=${_API_URL}',
+      '--build-arg', 'BACKEND_URL=${_API_URL}',
+      '--build-arg', 'NODE_ENV=production',
+      # Etiquetamos la imagen
+      '-t', 'us-central1-docker.pkg.dev/onisat/onisat-repo/frontend:v1',
+      '.'
+    ]
+images:
+  - 'us-central1-docker.pkg.dev/onisat/onisat-repo/frontend:v1'

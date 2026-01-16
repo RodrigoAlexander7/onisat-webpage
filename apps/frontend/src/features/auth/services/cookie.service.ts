@@ -12,7 +12,7 @@ export async function setAuthCookie(token: string): Promise<void> {
     value: token,
     httpOnly: true,
     secure: serverEnv.isProduction,
-    sameSite: 'lax',
+    sameSite: 'none',
     maxAge: 60 * 60 * 24 * 7, // 1 week
     path: '/',
   });

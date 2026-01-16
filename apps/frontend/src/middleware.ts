@@ -9,6 +9,6 @@ export function middleware(req: NextRequest) {
 
 // add login to check if the user is authenticated
 export const config = {
-  matcher: routesConfig.matcher,
-  //matcher: ['/dashboard/:path*', '/profile/:path*', '/login', '/admin/:path*'],
+  //matcher: routesConfig.matcher,
+  matcher: ['/dashboard/:path*', '/profile/:path*', '/login', '/admin/:path*'],
 };

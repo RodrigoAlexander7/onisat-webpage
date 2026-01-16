@@ -35,7 +35,7 @@ export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly configService: ConfigService,
-  ) {}
+  ) { }
 
   /**
    * POST /auth/register
@@ -160,7 +160,7 @@ export class AuthController {
     @Req() req: ExpressRequest & { user?: GoogleProfile },
     @Res() res: ExpressResponse,
   ) {
-    const frontendUrl = this.configService.get<string>("frontendURL");
+    const frontendUrl = this.configService.get<string>("FRONTEND_URL");
 
     try {
       const { accessToken } = await this.authService.callbackOauthGoogle(
