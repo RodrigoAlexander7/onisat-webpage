@@ -15,7 +15,6 @@ export class EmailWhitelistService {
       ? emailWhitelistStr.split(',').map(email => email.trim().toLowerCase())
       : [];
 
-    console.log('📧 EMAIL_WHITELIST cargada:', this.emailWhitelist);
   }
 
   /**

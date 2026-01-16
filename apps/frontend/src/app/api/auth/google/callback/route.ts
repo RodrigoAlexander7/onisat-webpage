@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
   // Token is valid, set cookie
   try {
     await setAuthCookie(token);
-    return NextResponse.redirect(new URL('/dashboard', req.url));
+    return NextResponse.redirect(new URL('/admin/news', req.url));
   } catch (error) {
     console.error('Error setting cookie:', error);
     return NextResponse.json(
