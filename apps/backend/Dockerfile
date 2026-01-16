@@ -44,8 +44,9 @@ COPY --from=builder /app/package.json ./
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
 
-# IMPORTANTE: Copiamos el cliente generado
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+# IMPORTANTE: Copiamos el cliente generado, usamos el output PERSONALIZADO
+COPY --from=builder /app/generated ./generated
+# Nota: Mantenemos la copia de @prisma por si acaso quedan referencias al package base
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
 # Comando de inicio
