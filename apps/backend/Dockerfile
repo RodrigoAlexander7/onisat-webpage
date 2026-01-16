@@ -1,25 +1,52 @@
-# Use node 22.20 and the alpine 3.21 base image (Mini OS)
-FROM node:22.20-alpine3.21
+# PRODUCTION DOCKERFILE FOR GOOGLE CLOUD
+# Using node slim for prisma compatibility
+FROM node:22-slim
 
+# Instalamos openssl (necesario para Prisma en Debian)
+RUN apt-get update -y && apt-get install -y openssl
+
+# IMPORTANT: We desable this cause active with corepack
 # Install pnpm globally (thi command is comming from the doc site)
-RUN npm install -g pnpm@latest-10
+#RUN npm install -g pnpm@latest-10
 
 # Create app directory and 
 WORKDIR /app
+RUN corepack enable
 
 # Copy package.json and package-lock.json files and install
-COPY package*.json .
+COPY package*.json pnpm-lock.yaml ./
 
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 
-RUN pnpx prisma generate
+RUN npx prisma generate
 
-# IMPORTANT: I FAILES HERE -> NEVER RUN MIGRATIONS ON A CONTAINER BUILD
-# |-> THIS SHOULD BE DONE ON CONTAINER STARTUP (COMANDLINE LIKE: 'docker exec -it backend-container pnpx prisma migrate dev')
-# |-> OR WITH DOCKER COMPOSE / KUBERNETES
-# RUN pnpx prisma migrate dev --name init 
+RUN pnpm run build
+
+# Limpiamos las dependencias de desarrollo
+RUN pnpm prune --prod
 
 
-CMD ["pnpm", "run", "start:dev"]
+
+# RUNNER STAGE 
+FROM node:22-slim AS runner
+
+# Instalamos openssl también en la imagen final
+RUN apt-get update -y && apt-get install -y openssl
+
+WORKDIR /app
+RUN corepack enable
+
+# Copiamos solo lo necesario desde la etapa anterior
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/prisma ./prisma
+
+# IMPORTANTE: Copiamos el cliente generado
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+
+# Comando de inicio
+CMD ["node", "dist/main"]
