@@ -23,6 +23,9 @@ ARG NEXT_PUBLIC_API_URL
 ### La convertimos en variable de entorno para que el build la lea
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 
+ARG NEXT_PUBLIC_FRONTEND_URL
+ENV NEXT_PUBLIC_FRONTEND_URL=$NEXT_PUBLIC_FRONTEND_URL
+
 ARG BACKEND_URL
 ENV BACKEND_URL=$BACKEND_URL
 
@@ -59,4 +62,4 @@ ENV PORT=8080
 ###  Exponemos el puerto (es solo formalismo, en realidad no hace nada) -> Documentacion
 EXPOSE 8080
 
-CMD [ "pnpm", "start" ]
+CMD ["sh", "-c", "pnpm start -p $PORT"]

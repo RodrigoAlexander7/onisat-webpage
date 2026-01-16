@@ -25,7 +25,8 @@ RUN npx prisma generate
 RUN pnpm run build
 
 # Limpiamos las dependencias de desarrollo
-RUN pnpm prune --prod
+# No lo hacemos porque prisma las necesita en el runner
+#RUN pnpm prune --prod
 
 
 
@@ -43,11 +44,12 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/prisma.config.ts ./prisma.config.ts
 
 # IMPORTANTE: Copiamos el cliente generado, usamos el output PERSONALIZADO
 COPY --from=builder /app/generated ./generated
 # Nota: Mantenemos la copia de @prisma por si acaso quedan referencias al package base
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
-# Comando de inicio
-CMD ["node", "dist/src/main.js"]
+# Comando de inicio: ejecutar migraciones y luego iniciar la app
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/src/main.js"]

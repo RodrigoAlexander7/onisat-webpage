@@ -68,8 +68,8 @@ export async function loginWithCredentials(
     // Set httpOnly cookie
     await setAuthCookie(accessToken);
 
-    // Redirect to dashboard on successful login
-    redirect('/dashboard');
+    // Redirect to create news on successful login
+    redirect('/admin/news');
   } catch (error) {
     console.error('Login error:', error);
     return {
