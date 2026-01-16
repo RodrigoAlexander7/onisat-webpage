@@ -1,0 +1,34 @@
+steps:
+  # 1. Construir la imagen Docker
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t', 'us-central1-docker.pkg.dev/onisat/onisat-repo/backend:latest',
+      '.'
+    ]
+
+  # 2. Subir la imagen a Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/onisat/onisat-repo/backend:latest']
+
+  # 3. Desplegar a Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'onisat-backend'
+      - '--image=us-central1-docker.pkg.dev/onisat/onisat-repo/backend:latest'
+      - '--region=us-central1'
+      - '--allow-unauthenticated'
+      - '--memory=512Mi'
+      # Usamos el archivo para variables NO sensibles
+      - '--env-vars-file=env.yaml'
+      # Usamos Secret Manager para lo sensible (DATABASE_URL, SECRETOS)
+      - '--set-secrets=DATABASE_URL=database-url:latest'
+      - '--set-secrets=AUTH_SECRET=auth-secret:latest'
+      - '--set-secrets=AUTH_GOOGLE_SECRET=google-auth-secret:latest'
+      - '--add-cloudsql-instances=onisat:us-central1:onisat-dev-db'
+
+images:
+  - 'us-central1-docker.pkg.dev/onisat/onisat-repo/backend:latest'

@@ -1,14 +1,35 @@
 steps:
+  # 1. Construir la imagen pasando los Build Args
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'build',
-      # Pasamos las variables como argumentos de construcción (Build Args)
       '--build-arg', 'NEXT_PUBLIC_API_URL=${_API_URL}',
+      '--build-arg', 'NEXT_PUBLIC_FRONTEND_URL=${_FRONTEND_URL}',
       '--build-arg', 'BACKEND_URL=${_API_URL}',
       '--build-arg', 'NODE_ENV=production',
-      # Etiquetamos la imagen
-      '-t', 'us-central1-docker.pkg.dev/onisat/onisat-repo/frontend:v1',
+      '-t', 'us-central1-docker.pkg.dev/onisat/onisat-repo/frontend:latest',
       '.'
     ]
+
+  # 2. Subir la imagen
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/onisat/onisat-repo/frontend:latest']
+
+  # 3. Desplegar a Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'onisat-frontend'
+      - '--image=us-central1-docker.pkg.dev/onisat/onisat-repo/frontend:latest'
+      - '--region=us-central1'
+      - '--allow-unauthenticated'
+      - '--memory=512Mi'
+
+substitutions:
+  _API_URL: "https://onisat-backend-59003269660.us-central1.run.app/"
+  _FRONTEND_URL: "https://onisat-frontend-59003269660.us-central1.run.app/"
+
 images:
-  - 'us-central1-docker.pkg.dev/onisat/onisat-repo/frontend:v1'
+  - 'us-central1-docker.pkg.dev/onisat/onisat-repo/frontend:latest'

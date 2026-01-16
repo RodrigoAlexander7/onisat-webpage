@@ -1,0 +1,38 @@
+# env.yaml para Google Cloud Run - Backend
+# Este archivo se usa con: gcloud run deploy --env-vars-file=env.yaml
+
+NODE_ENV: "production"
+# PORT: Google Cloud Run asigna automáticamente el puerto 8080
+
+
+# LOS SECRETOS COMENTADOS POR SERGURIDAD NO DEBEN IR AQUI SINO PASARSE POR TERMINAL ALGO ASI
+#printf "TU_AUTH_SECRET_SEGURO_AQUI" | gcloud secrets create auth-secret --data-file=-
+# Auth
+#AUTH_SECRET: "TU_AUTH_SECRET_SEGURO_AQUI"
+AUTH_GOOGLE_ID: "YOUR_GOOGLE_ID.apps.googleusercontent.com"
+#AUTH_GOOGLE_SECRET: "TU_GOOGLE_SECRET"
+# Database - Cloud SQL Connection
+# Formato: postgresql://USER:PASSWORD@/DATABASE?host=/cloudsql/PROJECT:REGION:INSTANCE
+#DATABASE_URL: "postgresql://postgres:TU_PASSWORD@/onisat_db?host=/cloudsql/onisat:us-central1:onisat-dev-db"
+
+
+# URLs - Actualizar con tus URLs de Cloud Run
+FRONTEND_URL: "https://onisat-frontend-59003269660.us-central1.run.app"
+GOOGLE_CALLBACK_URL: "https://onisat-backend-59003269660.us-central1.run.app/auth/google/callback"
+
+# Email whitelist
+EMAIL_WHITELIST: "rfernandezh@unsa.edu.pe:rodrygoleu7@gmail.com"
+
+
+# yaml alternativo
+# NODE_ENV: "production"
+# #PORT: "8080" por que google no deja asignar
+# AUTH_GOOGLE_ID: "YOUR_GOOGLE_ID.apps.googleusercontent.com"
+# EMAIL_WHITELIST: "rfernandezh@unsa.edu.pe,rodrygoleu7@gmail.com"
+# FRONTEND_URL: "https://aun-no-tengo-frontend.run.app"
+# GOOGLE_CALLBACK_URL: "https://aun-no-tengo-backend.run.app/auth/google/callback"
+
+
+
+
+
