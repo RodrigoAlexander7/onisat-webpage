@@ -10,11 +10,9 @@ export class EmailWhitelistService {
   private readonly emailWhitelist: string[];
 
   constructor(private configService: ConfigService) {
-    const emailWhitelistStr = this.configService.get<string>('EMAIL_WHITELIST', '');
-    this.emailWhitelist = emailWhitelistStr
-      ? emailWhitelistStr.split(',').map(email => email.trim().toLowerCase())
-      : [];
-
+    // Usamos el valor ya procesado por configuration.ts
+    // Esto retorna un string[] directamente
+    this.emailWhitelist = this.configService.get<string[]>('auth.emailWhitelist', []);
   }
 
   /**
