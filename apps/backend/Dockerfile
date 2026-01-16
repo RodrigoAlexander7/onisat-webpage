@@ -50,4 +50,4 @@ COPY --from=builder /app/generated ./generated
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
 # Comando de inicio
-CMD ["node", "dist/main"]
+CMD ["node", "dist/src/main.js"]
