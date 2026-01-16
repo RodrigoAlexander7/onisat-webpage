@@ -1,6 +1,6 @@
 # PRODUCTION DOCKERFILE FOR GOOGLE CLOUD
 # Using node slim for prisma compatibility
-FROM node:22-slim
+FROM node:22-slim AS builder
 
 # Instalamos openssl (necesario para Prisma en Debian)
 RUN apt-get update -y && apt-get install -y openssl
