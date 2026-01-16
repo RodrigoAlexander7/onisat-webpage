@@ -1,13 +1,11 @@
+import configuration from '@/configs/configuration';
 /**
  * Email Whitelist Configuration
  * Only emails in this list can register or login to the system
  * Add authorized emails here
  */
-export const EMAIL_WHITELIST: string[] = [
-  "admin@test.com",
-  "rodrygoleu7@gmail.com"
-  // Add more authorized emails here
-];
+const config = configuration()
+export const EMAIL_WHITELIST: string[] = config.auth.emailWhitelist;
 
 /**
  * Check if an email is in the whitelist
