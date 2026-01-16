@@ -7,9 +7,16 @@ import { JwtStrategy } from "./jwt.strategy";
 import { UsersModule } from "@/users/users.module";
 import { JwtModule } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
+import { EmailWhitelistService } from "@/configs/email-whitelist";
 
 @Module({
-  providers: [AuthService, GoogleStrategy, LocalStrategy, JwtStrategy],
+  providers: [
+    AuthService,
+    GoogleStrategy,
+    LocalStrategy,
+    JwtStrategy,
+    EmailWhitelistService,
+  ],
   imports: [
     UsersModule,
     JwtModule.registerAsync({
@@ -21,4 +28,4 @@ import { ConfigService } from "@nestjs/config";
   ],
   controllers: [AuthController],
 })
-export class AuthModule {}
+export class AuthModule { }

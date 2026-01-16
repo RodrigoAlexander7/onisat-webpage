@@ -7,7 +7,7 @@ import {
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import type { User } from "@generated/prisma/client";
-import { isEmailWhitelisted } from "@/configs/email-whitelist";
+import { EmailWhitelistService } from "@/configs/email-whitelist";
 
 /**
  * LocalStrategy validates user credentials for local authentication
@@ -15,7 +15,10 @@ import { isEmailWhitelisted } from "@/configs/email-whitelist";
  */
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy, "local") {
-  constructor(private readonly authService: AuthService) {
+  constructor(
+    private readonly authService: AuthService,
+    private readonly emailWhitelistService: EmailWhitelistService,
+  ) {
     super({
       usernameField: "email", // Use email instead of default 'username' field
       passwordField: "password",
@@ -29,7 +32,7 @@ export class LocalStrategy extends PassportStrategy(Strategy, "local") {
    */
   async validate(email: string, password: string): Promise<User> {
     // Check if email is whitelisted before validating credentials
-    if (!isEmailWhitelisted(email)) {
+    if (!this.emailWhitelistService.isEmailWhitelisted(email)) {
       throw new ForbiddenException(
         "Email not authorized. Please contact an administrator.",
       );

@@ -10,7 +10,7 @@ import { UsersService } from "@/users/users.service";
 import type { User } from "@generated/prisma/client";
 import * as bcrypt from "bcrypt";
 import { RegisterDto, LoginDto } from "@/auth/dto";
-import { isEmailWhitelisted } from "@/configs/email-whitelist";
+import { EmailWhitelistService } from "@/configs/email-whitelist";
 
 interface GoogleProfile {
   name?: string;
@@ -28,7 +28,8 @@ export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly usersService: UsersService,
-  ) {}
+    private readonly emailWhitelistService: EmailWhitelistService,
+  ) { }
 
   /**
    * Validates user credentials for local authentication
@@ -59,7 +60,7 @@ export class AuthService {
     const { email, password, name } = dto;
 
     // Check if email is whitelisted
-    if (!isEmailWhitelisted(email)) {
+    if (!this.emailWhitelistService.isEmailWhitelisted(email)) {
       throw new ForbiddenException(
         "Email not authorized. Please contact an administrator.",
       );
@@ -113,7 +114,7 @@ export class AuthService {
     if (!email) throw new UnauthorizedException("Email not found from Google");
 
     // Check if email is whitelisted
-    if (!isEmailWhitelisted(email)) {
+    if (!this.emailWhitelistService.isEmailWhitelisted(email)) {
       throw new ForbiddenException(
         "Email not authorized. Please contact an administrator.",
       );

@@ -1,15 +1,28 @@
-import configuration from '@/configs/configuration';
-/**
- * Email Whitelist Configuration
- * Only emails in this list can register or login to the system
- * Add authorized emails here
- */
-const config = configuration()
-export const EMAIL_WHITELIST: string[] = config.auth.emailWhitelist;
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 /**
- * Check if an email is in the whitelist
+ * Email Whitelist Service
+ * Only emails in this list can register or login to the system
  */
-export function isEmailWhitelisted(email: string): boolean {
-  return EMAIL_WHITELIST.includes(email.toLowerCase());
+@Injectable()
+export class EmailWhitelistService {
+  private readonly emailWhitelist: string[];
+
+  constructor(private configService: ConfigService) {
+    const emailWhitelistStr = this.configService.get<string>('EMAIL_WHITELIST', '');
+    this.emailWhitelist = emailWhitelistStr
+      ? emailWhitelistStr.split(',').map(email => email.trim().toLowerCase())
+      : [];
+
+    console.log('📧 EMAIL_WHITELIST cargada:', this.emailWhitelist);
+  }
+
+  /**
+   * Check if an email is in the whitelist
+   */
+  isEmailWhitelisted(email: string): boolean {
+    const normalizedEmail = email.toLowerCase();
+    return this.emailWhitelist.includes(normalizedEmail);
+  }
 }
