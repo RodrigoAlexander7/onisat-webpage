@@ -29,7 +29,7 @@ steps:
 
 substitutions:
   _API_URL: "https://onisat-backend-59003269660.us-central1.run.app/"
-  _FRONTEND_URL: "https://onisat-frontend-59003269660.us-central1.run.app/"
+  _FRONTEND_URL: "https://onisat.rodrygoleu.me/"
 
 images:
   - 'us-central1-docker.pkg.dev/onisat/onisat-repo/frontend:latest'
