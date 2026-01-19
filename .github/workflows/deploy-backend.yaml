@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'backend/**'  # Solo mira cambios del backend
+      - 'apps/backend/**'  # Solo mira cambios del backend
       - '.github/workflows/deploy-backend.yaml' # Y si cambia este archivo también
 
 jobs:

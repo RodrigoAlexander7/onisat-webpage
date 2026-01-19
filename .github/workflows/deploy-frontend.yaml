@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'frontend/**' # <--- Solo mira cambios en el frontend
+      - 'apps/frontend/**' # <--- Solo mira cambios en el frontend
       - '.github/workflows/deploy-frontend.yaml'
 
 jobs:
