@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface NavItem {
   label: string;
@@ -48,12 +49,13 @@ export default function Header() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-onisat-blue to-onisat-navy">
-            <span className="text-sm font-bold text-white">O</span>
-          </div>
-          <span className="text-xl font-bold tracking-tight text-onisat-navy">
-            ONISAT
-          </span>
+          <Image
+            src="/images/cansat/onisat_logo.png"
+            alt="ONISAT Logo"
+            width={120}
+            height={40}
+            className="h-10 w-auto"
+          />
         </Link>
 
         {/* Desktop Navigation */}

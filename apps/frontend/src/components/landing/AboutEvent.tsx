@@ -66,49 +66,14 @@ export default function AboutEvent() {
 
           {/* Image/Illustration */}
           <div className="relative order-1 lg:order-2">
-            <div className="relative aspect-square overflow-hidden rounded-3xl bg-gradient-to-br from-onisat-navy via-onisat-blue to-onisat-starry shadow-2xl">
-              {/* Decorative elements */}
-              <div className="absolute inset-0 opacity-30">
-                <div className="stars-small" />
-                <div className="stars-medium" />
-              </div>
-
-              {/* CanSat Illustration */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative">
-                  {/* Satellite body */}
-                  <div className="relative z-10 h-48 w-32 rounded-2xl border-4 border-onisat-gold bg-gradient-to-b from-onisat-navy to-onisat-starry shadow-xl sm:h-64 sm:w-40">
-                    {/* Antenna */}
-                    <div className="absolute -top-8 left-1/2 h-8 w-1 -translate-x-1/2 bg-onisat-gold" />
-                    <div className="absolute -top-10 left-1/2 h-4 w-4 -translate-x-1/2 rounded-full bg-onisat-gold" />
-
-                    {/* Display screen */}
-                    <div className="absolute left-1/2 top-6 h-16 w-20 -translate-x-1/2 rounded-lg bg-onisat-blue/30 sm:h-20 sm:w-24">
-                      <div className="flex h-full items-center justify-center">
-                        <span className="text-xl font-bold text-onisat-gold sm:text-2xl">
-                          O
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Sensor dots */}
-                    <div className="absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-2">
-                      <div className="h-3 w-3 animate-pulse rounded-full bg-green-400" />
-                      <div className="h-3 w-3 animate-pulse rounded-full bg-onisat-gold animation-delay-200" />
-                      <div className="h-3 w-3 animate-pulse rounded-full bg-red-400 animation-delay-400" />
-                    </div>
-                  </div>
-
-                  {/* Autogyro blades */}
-                  <div className="absolute -top-16 left-1/2 -translate-x-1/2">
-                    <div className="h-1 w-40 animate-spin-slow rounded-full bg-gradient-to-r from-transparent via-white to-transparent sm:w-56" />
-                  </div>
-
-                  {/* Orbit ring */}
-                  <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-white/20 sm:h-96 sm:w-96" />
-                </div>
-              </div>
-
+            <div className="relative aspect-square overflow-hidden rounded-3xl shadow-2xl">
+              <Image
+                src="/images/cansat/cansat_cover.jpg"
+                alt="CanSat ONISAT"
+                fill
+                className="object-cover"
+              />
+              
               {/* UNAM Badge */}
               <div className="absolute bottom-4 right-4 rounded-full bg-white/90 px-4 py-2 text-sm font-bold text-onisat-navy shadow-lg">
                 UNAM 🇲🇽
