@@ -14,49 +14,49 @@ const teamMembers: TeamMember[] = [
     id: '1',
     name: 'Edison Velasco Huaman',
     role: 'Estudiante de Física',
-    image: '/images/team/member-1.svg',
+    image: '/images/team/edison.png',
     linkedin: 'https://linkedin.com/in/',
   },
   {
     id: '2',
     name: 'Wendy Analy Vilca Luna',
     role: 'Estudiante de Física',
-    image: '/images/team/member-2.svg',
+    image: '/images/team/wendy.png',
     linkedin: 'https://linkedin.com/in/',
   },
   {
     id: '3',
     name: 'Diana Isabel Huanqui Chirme',
     role: 'Estudiante de Ingeniería Eléctrica',
-    image: '/images/team/member-3.svg',
+    image: '/images/team/diana.png',
     linkedin: 'https://linkedin.com/in/',
   },
   {
     id: '4',
     name: 'Luis Brandon Velasco Huaman',
     role: 'Estudiante de Física',
-    image: '/images/team/member-4.svg',
+    image: '/images/team/luis.png',
     linkedin: 'https://linkedin.com/in/',
   },
   {
     id: '5',
     name: 'Alex Hugo Torres Guzman',
     role: 'Estudiante de Ingeniería Electrónica',
-    image: '/images/team/member-5.svg',
+    image: '/images/team/alex.png',
     linkedin: 'https://linkedin.com/in/',
   },
   {
     id: '6',
     name: 'Brian Sebastián Sánchez Montoya',
     role: 'Estudiante de Ingeniería Mecánica',
-    image: '/images/team/member-6.svg',
+    image: '/images/team/brian.jpeg',
     linkedin: 'https://linkedin.com/in/',
   },
   {
     id: '7',
     name: 'Rodrigo Alexander Fernandez Huarca',
     role: 'Estudiante de Ingeniería de Sistemas',
-    image: '/images/team/member-7.svg',
+    image: '/images/team/rodrigo.jpg',
     github: 'https://github.com/RodrigoAlexander7',
     linkedin: 'https://linkedin.com/in/',
   },
@@ -90,15 +90,14 @@ export default function AboutUs() {
             >
               {/* Avatar */}
               <div className="relative mx-auto mb-4 h-24 w-24 overflow-hidden rounded-full bg-gradient-to-br from-onisat-blue to-onisat-navy p-1">
-                <div className="flex h-full w-full items-center justify-center rounded-full bg-gray-100">
-                  {/* Placeholder avatar with initials */}
-                  <span className="text-2xl font-bold text-onisat-navy">
-                    {member.name
-                      .split(' ')
-                      .map((n) => n[0])
-                      .slice(0, 2)
-                      .join('')}
-                  </span>
+                <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-full bg-white">
+                  <Image
+                    src={member.image}
+                    alt={`Foto de ${member.name}`}
+                    width={96}
+                    height={96}
+                    className="h-full w-full object-cover"
+                  />
                 </div>
               </div>
 
