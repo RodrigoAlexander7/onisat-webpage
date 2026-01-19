@@ -16,7 +16,7 @@ interface Slide {
 const slides: Slide[] = [
   {
     id: 1,
-    image: '/images/hero/slide-1.svg',
+    image: '/images/cover/drone_gif.gif',
     title: 'Misión CanSat 2026',
     subtitle:
       'Fusionando ingeniería espacial con el arte de Van Gogh. Un viaje entre las estrellas y los girasoles.',
@@ -25,7 +25,7 @@ const slides: Slide[] = [
   },
   {
     id: 2,
-    image: '/images/hero/slide-2.svg',
+    image: '/images/cover/programa_espacial.png',
     title: 'Telemetría en Tiempo Real',
     subtitle:
       'Transmitiendo datos desde las alturas. Tecnología de vanguardia para monitorear cada momento del descenso.',
