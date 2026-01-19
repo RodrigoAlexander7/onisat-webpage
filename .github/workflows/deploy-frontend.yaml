@@ -1,0 +1,30 @@
+name: Deploy Frontend
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'frontend/**' # <--- Solo mira cambios en el frontend
+      - '.github/workflows/deploy-frontend.yaml'
+
+jobs:
+  deploy-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      # El frontend usa variables de build, no env.yaml en runtime, 
+      - name: Build and Deploy
+        run: |
+          cd frontend
+          gcloud builds submit --config cloudbuild.yaml .
