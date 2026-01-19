@@ -26,5 +26,5 @@ jobs:
       # El frontend usa variables de build, no env.yaml en runtime, 
       - name: Build and Deploy
         run: |
-          cd frontend
+          cd apps/frontend
           gcloud builds submit --config cloudbuild.yaml .

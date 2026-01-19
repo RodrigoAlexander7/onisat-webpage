@@ -28,11 +28,11 @@ jobs:
       # Inyectamos el env.yaml desde los secretos 
       - name: Create env.yaml
         run: |
-          cd backend
+          cd apps/backend
           echo "${{ secrets.BACKEND_ENV_FILE }}" > env.yaml
 
       # 3. ->>>> Usamos archivo cloudbuild.yaml del backend
       - name: Build and Deploy
         run: |
-          cd backend
+          cd apps/backend
           gcloud builds submit --config cloudbuild.yaml .
