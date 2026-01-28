@@ -39,7 +39,7 @@ export default function AboutEvent() {
             <div className="mt-8 grid grid-cols-3 gap-4">
               <div className="rounded-xl bg-gray-50 p-4 text-center">
                 <div className="text-2xl font-bold text-onisat-navy sm:text-3xl">
-                  1 km
+                  400 m
                 </div>
                 <div className="mt-1 text-xs text-gray-500 sm:text-sm">
                   Altitud de lanzamiento
